@@ -1,27 +1,28 @@
 import unittest
-from pathlib import Path
+import pytest
+
+from unittest.mock import patch, mock_open
 from advent_of_code_2025_python.days.day1.Day1 import Day1
 
-class TestDay1(unittest.TestCase):
+class TestDay1:
 
-    @classmethod
-    def setUpClass(cls):
-        cls.test_file = Path("test_input.txt")
-        test_data = ["R10", "L60", "R120", "L250", "R75", "L30", "R300", "L0"]
-        cls.test_file.write_text("\n".join(test_data))
+    @pytest.fixture()
+    def day1_instance(self):
+        return Day1("")
 
-    @classmethod
-    def tearDownClass(cls):
-        cls.test_file.unlink()
+    def test_run_1(self, day1_instance):
+        mock_data = "R10\nL60\nR120\nL250\nR75\nL30\nR300\nL0"
 
-    def setUp(self):
-        self.day = Day1(str(self.test_file))
+        with patch("builtins.open", mock_open(read_data=mock_data)):
+            result = day1_instance.run()
+        assert result == "password: 1"
 
-    def test_run_1(self):
-        self.assertEqual(self.day.run(), "password: 1")
+    def test_run_2(self, day1_instance):
+        mock_data = "R10\nL60\nR120\nL250\nR75\nL30\nR300\nL0"
 
-    def test_run_2(self):
-        self.assertEqual(self.day.run2(), "password: 9")
+        with patch("builtins.open", mock_open(read_data=mock_data)):
+            result = day1_instance.run2()
+        assert result == "password: 9"
 
 if __name__ == "__main__":
     unittest.main()

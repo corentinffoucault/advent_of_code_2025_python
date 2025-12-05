@@ -1,4 +1,6 @@
 from advent_of_code_2025_python.days.ADay import ADay
+from advent_of_code_2025_python.days.day1.Dial import Dial
+
 
 class Day1(ADay):
 
@@ -6,49 +8,24 @@ class Day1(ADay):
     _INIT_POS = 50
 
     def run(self):
-        pos = self._INIT_POS
-        nb_zero = 0
         data = self._get_data()
+        dial = Dial(self._INIT_POS, self._CIRCLE_SIZE)
+        nb_zero = 0
         for move in data:
-            pos = self._apply_move_1(pos, move)
-            if pos == 0:
+            dial.apply_move_with_zero_tracking(move)
+            if dial.pos == 0:
                 nb_zero += 1
         return f"password: {nb_zero}"
 
     def run2(self):
-        pos = self._INIT_POS
-        nb_zero = 0
         data = self._get_data()
+        dial = Dial(self._INIT_POS, self._CIRCLE_SIZE)
+        nb_zero = 0
         for move in data:
-            pos, tmp_nb_zero = self._apply_move_2(pos, move)
-            nb_zero += tmp_nb_zero
-            if pos == 0:
+            dial.apply_move_with_zero_tracking(move)
+            if dial.pos == 0:
                 nb_zero += 1
-        return f"password: {nb_zero}"
-
-    def _apply_move_1(self, pos: int, move: tuple[str, int]) -> int:
-        delta = move[1] if move[0] == 'R' else -move[1]
-        return (pos + delta) % self._CIRCLE_SIZE
-
-    def _apply_move_2(self, pos: int, move: tuple[str, int]) -> tuple[int, int]:
-        direction, steps = move
-        nb_full_cycles = steps // self._CIRCLE_SIZE
-        remaining_steps = steps % self._CIRCLE_SIZE
-
-        zero_crossings = nb_full_cycles
-
-        if direction == 'L':
-            new_pos = pos - remaining_steps
-            if pos - remaining_steps < 0:
-                zero_crossings += 1
-            if pos == 0:
-                zero_crossings -= 1
-        else:
-            new_pos = pos + remaining_steps
-            if pos + remaining_steps > self._CIRCLE_SIZE:
-                zero_crossings += 1
-
-        return new_pos % self._CIRCLE_SIZE, zero_crossings
+        return f"password: {nb_zero + dial.zero_crossings}"
 
     def _get_data(self) -> list[tuple[str, int]]:
         with open(self.resource_path) as f:
