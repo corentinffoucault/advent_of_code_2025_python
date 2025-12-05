@@ -1,8 +1,10 @@
 from advent_of_code_2025_python.days.day1.Day1 import Day1
+from advent_of_code_2025_python.days.day2.Day2 import Day2
 from advent_of_code_2025_python.lib.path_utils import get_resources_path
 
 days = [
     Day1(get_resources_path(1)),
+    Day2(get_resources_path(2)),
 ]
 
 def main():
