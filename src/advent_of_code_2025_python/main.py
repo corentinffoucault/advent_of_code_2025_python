@@ -1,17 +1,19 @@
 from advent_of_code_2025_python.days.day1.Day1 import Day1
 from advent_of_code_2025_python.days.day2.Day2 import Day2
 from advent_of_code_2025_python.days.day3.Day3 import Day3
+from advent_of_code_2025_python.days.day4.Day4 import Day4
 from advent_of_code_2025_python.lib.path_utils import get_resources_path
 
 days = [
     Day1(get_resources_path(1)),
     Day2(get_resources_path(2)),
     Day3(get_resources_path(3)),
+    Day4(get_resources_path(4)),
 ]
 
 def main():
     day_index = 0
-    while day_index < 1 or day_index > 3:
+    while day_index < 1 or day_index > 4:
         day_index = int(input("Merci d’indiquer un jour (1-25): "))
 
     day = days[day_index - 1]
