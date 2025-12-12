@@ -3,7 +3,7 @@ import unittest
 from advent_of_code_2025_python.days.day6.Calculator import Calculator
 
 
-class TestFreshPart:
+class TestCalculator:
 
     def test_calculator_add(self):
         calculator = Calculator(["123", " 45", "  6"], "+")
